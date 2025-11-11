@@ -1,0 +1,61 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-center mb-6">Create an Account</h2>
+
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">First Name</label>
+        <input type="text" name="firstName" ngModel required
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Last Name</label>
+        <input type="text" name="lastName" ngModel required
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Mobile Number</label>
+        <input type="tel" name="mobile" ngModel required minlength="10" maxlength="10" pattern="[0-9]{10}"
+          placeholder="Enter 10-digit mobile no"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Email</label>
+        <input type="email" name="email" ngModel required
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Password</label>
+        <input placeholder="Minimum 8 characters" type="password" name="password" ngModel required minlength="8"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-gray-700 mb-1">Confirm Password</label>
+        <input type="password" name="confirmPassword" ngModel required minlength="8"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <div *ngIf="passwordMismatch" class="text-red-500 mb-4">
+        Passwords do not match!
+      </div>
+
+      <app-loader *ngIf="isloading"></app-loader>
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+        Sign Up
+      </button>
+    </form>
+    <div *ngIf="showSuccess" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+      <div class="bg-white text-center px-8 py-6 rounded-2xl shadow-2xl border border-amber-100 animate-fadeIn">
+        <h3 class="text-2xl font-semibold text-amber-600 mb-2">✅ Success!</h3>
+        <p class="text-gray-700 font-medium">{{ successMessage }}</p>
+      </div>
+    </div>
+    <p class="text-sm text-center mt-4">
+      Already have an account?
+      <a routerLink="/auth/login" class="text-indigo-600 hover:underline">Login</a>
+    </p>
+  </div>
+</div>

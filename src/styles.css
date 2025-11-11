@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  overflow-x: hidden;
+}
+
+
+.ngx-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  padding: 8px 0;
+  font-family: 'Inter', sans-serif;
+
+}
+
+.ngx-pagination li {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  min-width: 32px;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.ngx-pagination li:hover {
+  background-color: #bfdbfe !important;
+  color: #1d4ed8 !important;
+  transform: scale(1.05);
+}
+
+.ngx-pagination .current {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+  color: #111827 !important;
+}
+
+.ngx-pagination .disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

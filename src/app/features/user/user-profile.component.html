@@ -1,0 +1,69 @@
+<!-- Wrapper to center the profile card -->
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl p-10 flex flex-col md:flex-row items-center gap-10">
+    <div class="w-32 h-32 flex items-center justify-center rounded-2xl bg-amber-500 text-white shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-16 h-16" viewBox="0 0 16 16">
+        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm4-3a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+        <path fill-rule="evenodd" d="M14 14s-1-1.5-6-1.5S2 14 2 14s1-4 6-4 6 4 6 4z" />
+      </svg>
+    </div>
+
+    <div class="flex-1">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <h2 class="text-3xl font-bold text-blue-900">{{User.firstName}}</h2>
+        <div class="flex gap-4 mt-4 md:mt-0">
+          <!-- Logout Button -->
+          <button (click)="logout()"
+            class="flex items-center gap-2 px-6 py-3 bg-white border border-amber-500 text-blue-900 rounded-lg shadow-sm hover:bg-amber-50 transition text-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-12V5" />
+            </svg>
+            Logout
+          </button>
+
+          <button routerLink="/orderlist"
+            class="flex items-center gap-2 px-6 py-3 bg-white border border-amber-500 text-blue-900 rounded-lg shadow-sm hover:bg-amber-50 transition text-lg">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.5 7h13a1 1 0 011 1v11a2 2 0 01-2 2h-11a2 2 0 01-2-2V8a1 1 0 011-1zm3-2a3.5 3.5 0 017 0v2h-7V5z" />
+            </svg>
+            My Orders
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-blue-900 text-lg">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A4 4 0 016 17h12a4 4 0 01.879.804M15 11a3 3 0 01-6 0V7a3 3 0 016 0v4z" />
+          </svg>
+          <span class="font-semibold">Full Name:</span>
+          <span>{{User.firstName}}⠀{{User.lastName}}</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 5h2l3.6 7.59-1.35 2.44a1 1 0 00.45 1.34l3.2 1.6a1 1 0 001.34-.45l1.35-2.44L21 7h-2M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span class="font-semibold">Phone:</span>
+          <span>{{User.mobile}}</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m0 0l-4-4m4 4l-4 4" />
+          </svg>
+          <span class="font-semibold">Email:</span>
+          <span>{{User.email}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

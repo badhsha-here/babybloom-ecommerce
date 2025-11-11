@@ -1,0 +1,41 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+    <h2 class="text-2xl font-bold text-center mb-6">Login to Your Account</h2>
+    <form #loginForm="ngForm" (ngSubmit)="LoginUser(loginForm)">
+
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Email</label>
+        <input type="email" name="email" ngModel required
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="mb-2">
+        <label class="block text-gray-700 mb-1">Password</label>
+        <input type="password" name="password" ngModel required
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <div class="flex justify-end mb-4">
+        <a routerLink="/auth/forgot-password" class="text-sm text-indigo-600 hover:underline">
+          Forgot password?
+        </a>
+      </div>
+
+      <app-loader *ngIf="isloading"></app-loader>
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+        Login
+      </button>
+    </form>
+    <div *ngIf="showSuccess" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+      <div class="bg-white text-center px-8 py-6 rounded-2xl shadow-2xl border border-amber-100 animate-fadeIn">
+        <h3 class="text-2xl font-semibold text-amber-600 mb-2">✅ Success!</h3>
+        <p class="text-gray-700 font-medium">{{ successmessage }}</p>
+      </div>
+    </div>
+    <p class="text-sm text-center mt-4">
+      Don’t have an account?
+      <a routerLink="/auth/signup" class="text-indigo-600 hover:underline">Sign up</a>
+    </p>
+  </div>
+</div>

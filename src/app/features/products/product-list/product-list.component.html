@@ -1,0 +1,51 @@
+<div class="flex space-x-4 justify-center mb-7 mt-7">
+  <button *ngFor="let category of categories" (click)="selectedCategoryHandle(category)" [ngClass]="{
+            'bg-blue-500 text-white': selectedCategory === category,
+            'bg-gray-100 text-gray-800 hover:bg-blue-100': selectedCategory !== category
+          }" class="px-4 py-2 rounded-full font-medium transition duration-200">
+    {{ category }}
+  </button>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <p *ngIf="searchTerm"
+    class="mb-4 text-lg font-medium text-gray-700 border-l-4 border-yellow-500 px-4 py-2 rounded shadow-sm">
+    🔍 Showing results for: <span class="font-semibold text-yellow-800">{{ searchTerm }}</span>
+  </p>
+
+  <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      *ngFor="let product of (selectedCategory === 'All' ? (productsfilter | paginate: { itemsPerPage: 12, currentPage: p }) : productsfilter)"
+      [routerLink]="['/products', product.id]"
+      class="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition duration-300 flex flex-col w-full">
+
+      <img [src]="product.image" [alt]="product.name" class="w-full h-64 object-cover rounded-lg" />
+
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ product.name }}</h3>
+        <p class="text-gray-600 mb-4">{{ product.description }}</p>
+        <div class="flex items-center justify-between mt-2 w-full">
+          <span class="text-lg font-semibold text-amber-500 mt-1">₹{{ product.price }}</span>
+          <button [routerLink]="['/products', product.id]"
+            class="text-sm bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-white font-medium py-1 px-3 rounded shadow-md transition">
+            Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedCategory === 'All'" class="flex justify-center mt-8">
+    <pagination-controls (pageChange)="p = $event" [autoHide]="true" previousLabel="« Prev" nextLabel="Next »"
+      class="flex space-x-2">
+      <ng-template let-page="page" let-active="active">
+        <button [ngClass]="{
+            'bg-blue-500 text-white': active,
+            'bg-gray-100 text-gray-800 hover:bg-blue-100': !active
+          }" class="px-3 py-1 rounded-md font-medium transition duration-200">
+          {{ page }}
+        </button>
+      </ng-template>
+    </pagination-controls>
+  </div>
+</div>

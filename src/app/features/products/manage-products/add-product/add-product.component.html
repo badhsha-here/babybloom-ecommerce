@@ -1,0 +1,74 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-gray-900 text-white rounded-2xl shadow-2xl w-[32rem] p-5 relative">
+        <button (click)="close()" class="absolute top-2 right-2 text-gray-400 hover:text-white">
+            ✕
+        </button>
+
+        <h2 class="text-xl font-bold text-blue-500 text-center mb-4">Add Product</h2>
+
+        <form (ngSubmit)="addProduct()" #addForm="ngForm" class="space-y-3">
+            <div>
+                <label class="block font-semibold mb-1 text-sm text-blue-400">Name</label>
+                <input type="text" name="name" [(ngModel)]="newProduct.name"
+                    class="w-full border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                    required />
+            </div>
+
+            <div>
+                <label class="block font-semibold mb-1 text-sm text-green-400">Price</label>
+                <input type="number" name="price" [(ngModel)]="newProduct.price"
+                    class="w-full border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-green-400 outline-none"
+                    required />
+            </div>
+
+            <div>
+                <label class="block font-semibold mb-1 text-sm text-purple-400">Category</label>
+                <select name="category" [(ngModel)]="newProduct.category"
+                    class="w-full border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-purple-400 outline-none"
+                    required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-semibold mb-1 text-sm text-blue-400">Description</label>
+                <textarea name="description" [(ngModel)]="newProduct.description"
+                    class="w-full border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                    rows="2"></textarea>
+            </div>
+            <div>
+                <label class="block font-semibold mb-1 text-sm text-blue-400">Extra Description</label>
+                <textarea name="description" [(ngModel)]="newProduct.extraDescription"
+                    class="w-full border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                    rows="2"></textarea>
+            </div>
+
+            <div class="flex space-x-3 items-start">
+                <textarea name="image" placeholder="Image URL" [(ngModel)]="newProduct.image"
+                    class="flex-1 border border-gray-700 rounded-lg p-2 text-sm bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                    rows="2"></textarea>
+                <div class="w-20 h-20 border border-gray-700 rounded-lg overflow-hidden bg-gray-800">
+                    <img *ngIf="newProduct.image" [src]="newProduct.image" alt="Preview"
+                        class="w-full h-full object-cover" />
+                    <div *ngIf="!newProduct.image"
+                        class="w-full h-full flex items-center justify-center text-gray-500 text-xs">
+                        Preview
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-2">
+                <button type="button" (click)="close()"
+                    class="px-3 py-1 rounded-lg bg-gray-700 text-sm hover:bg-gray-600 transition">
+                    Cancel
+                </button>
+                <button type="submit"
+                    [disabled]="!newProduct.name||!newProduct.price||!newProduct.category||!newProduct.description"
+                    class="px-3 py-1 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600 transition">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

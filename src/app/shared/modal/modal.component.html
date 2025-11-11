@@ -1,0 +1,11 @@
+<div *ngIf="isVisible" class="fixed right-4 top-20 w-72 p-4 rounded-lg shadow-lg transform transition-all duration-300"
+  [ngClass]="{
+    'bg-green-500': type === 'success',
+    'bg-red-500': type === 'error',
+    'bg-blue-500': type === 'info'
+  }">
+  <div class="flex justify-between items-center">
+    <p class="text-white font-medium">{{ message }}</p>
+    <button (click)="onClose()" class="text-white font-bold">&times;</button>
+  </div>
+</div>

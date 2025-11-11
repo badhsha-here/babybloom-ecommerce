@@ -1,0 +1,63 @@
+<div class="flex min-h-screen bg-black text-white">
+  <aside class="w-64 bg-black text-white flex flex-col">
+    <div class="p-6">
+      <h1 class="text-2xl font-bold text-blue-500">Admin</h1>
+    </div>
+
+    <nav class="flex-1 px-4">
+      <ul class="space-y-4">
+        <li>
+          <a routerLink="/admin" routerLinkActive="bg-blue-700" [routerLinkActiveOptions]="{ exact: true }"
+            class="block px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/manageorders" routerLinkActive="bg-blue-700"
+            class="block px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+            Orders
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/manageusers" routerLinkActive="bg-blue-700"
+            class="block px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+            Users
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/manageproducts" routerLinkActive="bg-blue-700"
+            class="block px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+            Products
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+
+  <main class="flex-1 bg-black p-6 pt-6 overflow-y-auto">
+
+   <div class="flex justify-between items-center mb-6">
+  <!-- Left: Page Title -->
+  <h2 class="text-3xl font-bold text-blue-400 capitalize">
+    {{ getCurrentPageTitle() }}
+  </h2>
+
+  <!-- Right: Welcome + Logout grouped -->
+  <div class="flex items-center space-x-4">
+    <h2 class="text-lg font-bold text-blue-400 capitalize">
+      Welcome, Admin
+    </h2>
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</div>
+
+
+    <router-outlet></router-outlet>
+  </main>
+</div>

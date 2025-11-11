@@ -1,0 +1,58 @@
+<div class="max-w-6xl mx-auto mt-6">
+    <h2 class="text-xl font-bold text-blue-400 mb-4">All Orders</h2>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-900 text-gray-300 border border-gray-700 rounded-lg">
+            <thead>
+                <tr class="bg-gray-800 text-gray-300">
+                    <th class="py-2 px-4 text-left">Order ID</th>
+                    <th class="py-2 px-4 text-left">User</th>
+                    <th class="py-2 px-4 text-left">Items</th>
+                    <th class="py-2 px-4 text-left">Total</th>
+                    <th class="py-2 px-4 text-left">Status</th>
+                    <th class="py-2 px-4 text-left">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let order of orders" class="border-b border-gray-700 hover:bg-gray-800 transition">
+                    <td class="py-2 px-4 font-medium text-blue-400">{{ order.id }}</td>
+                    <td class="py-2 px-4">{{ order.fullname || 'Unknown' }}</td>
+
+                    <td class="py-2 px-4">
+                        <button class="text-sm text-blue-500 hover:underline" (click)="modalItems = order.items">
+                            {{ order.items.length }} item(s)
+                        </button>
+                    </td>
+
+                    <td class="py-2 px-4 font-semibold">₹{{ order.total }}</td>
+                    <td class="py-2 px-4">
+                        <select [ngModel]="order.status" (ngModelChange)="changeStatus(order, $event)"
+                            class="bg-gray-800 text-gray-300 border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400">
+                            <option value="pending" class="bg-gray-900 text-gray-300">Pending</option>
+                            <option value="delivered" class="bg-gray-900 text-gray-300">Delivered</option>
+                            <option value="cancelled" class="bg-gray-900 text-gray-300">Cancelled</option>
+                        </select>
+                    </td>
+
+                    <td class="py-2 px-4">{{ order.orderDate | date:'short' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="modalItems" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-96 max-h-[80vh] overflow-y-auto">
+        <h3 class="text-lg font-bold text-blue-400 mb-4">Ordered Items</h3>
+        <ul class="space-y-2">
+            <li *ngFor="let item of modalItems" class="bg-gray-800 p-2 rounded flex justify-between text-gray-300">
+                <span>{{ item.name }} (x{{ item.quantity }})</span>
+                <span class="font-medium">₹{{ item.price * item.quantity }}</span>
+            </li>
+        </ul>
+        <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded" (click)="modalItems = null">
+            Close
+        </button>
+    </div>
+</div>

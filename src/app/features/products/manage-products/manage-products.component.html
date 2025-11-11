@@ -1,0 +1,155 @@
+<div class="min-h-screen bg-black text-white p-6">
+
+  <div class="flex space-x-2 mb-4">
+    <button *ngFor="let category of categories" (click)="selectCategoryChange(category)" [ngClass]="{
+      'bg-blue-500 text-white': selectedCategory === category,
+      'bg-gray-800 text-white hover:bg-blue-600': selectedCategory !== category
+    }" class="px-3 py-1 rounded-md font-medium transition duration-200">
+      {{ category }} ({{ categoryCount[category] || 0 }})
+    </button>
+  </div>
+
+
+
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold text-gray-800">Manage Products</h1>
+    <button (click)="openAddModal()"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200">
+      + Add Product
+    </button>
+  </div>
+
+
+
+  <div class="space-y-2">
+    <div *ngFor="let product of productsFilter | paginate: { itemsPerPage: 7, currentPage: p }"
+      class="flex items-center bg-gray-900 rounded-md p-2 hover:bg-blue-900 transition duration-200">
+
+
+      <img [src]="product.image" alt="{{product.name}}" class="w-12 h-12 object-cover rounded mr-4"
+        (click)="openViewModal(product)">
+
+      <div class="flex-1 flex flex-col justify-center">
+        <span class="font-semibold text-blue-400">{{ product.name }}</span>
+        <span class="text-green-400 text-sm">Price:₹{{ product.price }}</span>
+        <span class="text-purple-400 text-sm">Category: {{ product.category }}</span>
+      </div>
+
+      <div class="flex space-x-2 ml-4">
+        <button (click)="openViewModal(product)"
+          class="px-3 py-1 text-xs bg-indigo-600 text-white rounded hover:bg-indigo-700">view</button>
+        <button (click)="openEditModal(product)"
+          class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-2 py-1 rounded">Edit</button>
+        <button (click)="openDeleteModel(product)"
+          class="bg-red-500 hover:bg-red-600 text-white text-sm px-2 py-1 rounded">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center mt-6">
+
+    <app-edit-product [product]="selectedProduct" [categories]="categories" [isOpen]="editModalOpen"
+      (close)="editModalOpen=false" (save)="updateProduct($event)"> </app-edit-product>
+
+    <app-add-product *ngIf="isAddOpen" (closeAddModal)="isAddOpen=false" (newProductAdded)="onProductAdded($event)"> </app-add-product>
+
+
+    <div *ngIf="isDeleteModelOpen" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-gray-900 text-white rounded-2xl shadow-2xl p-6 w-80 flex flex-col items-center text-center">
+
+
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mb-3" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+
+        <h3 class="text-xl font-bold text-red-500 mb-2">Delete Product?</h3>
+
+        <p class="text-gray-400 mb-4 text-sm">This action cannot be undone. Are you sure you want to proceed?</p>
+
+
+        <div class="flex space-x-3 w-full justify-center">
+          <button (click)="closeDeleteModel()"
+            class="flex-1 py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition">
+            Cancel
+          </button>
+          <button (click)="confirmDelete()"
+            class="flex-1 py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="viewModal" class="fixed inset-0 z-50 flex items-center justify-center">
+
+      <div class="absolute inset-0 bg-black bg-opacity-50" (click)="closeViewModal(products)"></div>
+
+
+      <div
+        class="relative bg-gray-900 text-white rounded-xl shadow-xl w-full max-w-md p-4 mx-4 transform transition-transform duration-200"
+        role="dialog" aria-modal="true" aria-labelledby="viewProductTitle">
+
+
+        <button (click)="closeViewModal(products)"
+          class="absolute top-3 right-3 text-gray-300 hover:text-white p-1 rounded-md focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="flex items-start space-x-3">
+          <img *ngIf="selectedProduct?.image" [src]="selectedProduct.image" alt="{{ selectedProduct?.name }}"
+            class="w-20 h-20 object-cover rounded-md flex-shrink-0" />
+
+          <div class="flex-1 min-w-0">
+            <h3 id="viewProductTitle" class="text-sm font-semibold truncate">
+              Name : {{ selectedProduct?.name || 'Untitled product' }}
+            </h3>
+            <div class="mt-2 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-green-400">
+                  Price : ₹{{ selectedProduct?.price | number:'1.0-2' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-300 mt-3 max-h-28 overflow-auto text-justify">
+          Desctiption : {{ selectedProduct?.description || 'No description available.' }}
+        </p>
+
+        <p class="text-sm text-gray-300 mt-3 max-h-28 overflow-auto text-justify">
+          ExtraDescription :{{ selectedProduct?.extraDescription || 'No description available.' }}
+        </p>
+
+
+        <div class="mt-4 flex justify-end space-x-2">
+          <button (click)="closeViewModal(products)" class="py-1 px-3 text-xs bg-gray-700 hover:bg-gray-600 rounded-md">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <pagination-controls (pageChange)="p = $event" [autoHide]="true" previousLabel="« Prev" nextLabel="Next »"
+      class="flex space-x-1">
+      <ng-template let-page="page" let-active="active">
+        <button [ngClass]="{
+          'bg-blue-500 text-white shadow-md': active,
+          'bg-gray-100 text-gray-900 hover:bg-blue-200 hover:text-blue-700': !active
+        }" class="px-2 py-1 rounded text-sm font-medium transition-transform duration-150">
+          {{ page }}
+        </button>
+      </ng-template>
+
+      <ng-template let-label="label" let-disabled="disabled">
+        <button [disabled]="disabled" class="px-3 py-1 rounded text-sm font-medium bg-gray-100 text-gray-900
+               hover:bg-blue-200 hover:text-blue-700 disabled:opacity-40 disabled:cursor-not-allowed
+               transition-all duration-150 shadow-sm">
+          {{ label }}
+        </button>
+      </ng-template>
+    </pagination-controls>
+  </div>
